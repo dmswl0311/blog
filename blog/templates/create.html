@@ -1,0 +1,36 @@
+{%extends 'base.html' %}
+{%block content %}
+
+<div align="center">
+        <br>
+        <img src="https://cdn.icon-icons.com/icons2/677/PNG/512/feather-pen_icon-icons.com_60850.png" alt="블로그이미지" width="60px">
+        <h1 class="blog">글쓰기 페이지</h1>
+        <!-- class="badge badge-success"  -->
+</div>
+<div class="container" style="background-color:rgba(255, 255, 255, 0.918); height:80vh; border-radius: 20px; padding:30px;">
+<form action="{%url 'create'%}" method="post" enctype="multipart/form-data">
+    {%csrf_token%}
+    <p style="float: left; margin-right:10px;">카테고리 </p>
+        <select name="category" style="float: left;">
+            <option value="공지">공지</option>
+            <option value="자유">자유</option>
+            <option value="질문">질문</option>
+        </select>
+    <div style="clear:both;">
+    <p>제목<input type="text" name="title" style="margin-left:10px;" required autocomplete="off"></p>
+    </div>
+    <div style="clear:both;">
+    <p style="float: left; margin-right:10px;">내용</p> 
+    <textarea name="content" cols="100" rows="10" style="float: left;"></textarea>
+
+    <input type="file" name="pic">
+
+    </div>
+    <br><br>
+    <div align="right" style="clear:both;">
+    <input type="submit" value="글쓰기" class="btn btn-outline-primary" style="font-size: 12px">
+    <a href="/"><button type="button" class="btn btn-outline-primary" style="font-size: 12px">Home</button></a>
+    </div>
+</form>
+</div>
+{%endblock%}

@@ -1,0 +1,43 @@
+{%extends 'base.html'%}
+{%block content%}
+
+<div align="center">
+    <br>
+    <img src="https://cdn.icon-icons.com/icons2/677/PNG/512/feather-pen_icon-icons.com_60850.png" alt="블로그이미지" width="60px">
+    <h1 class="blog">Login</h1>
+</div>
+
+<div class="container" style="background-color:rgba(255, 255, 255, 0.918); height:50vh; border-radius: 20px; padding:30px;">
+    <br>
+    <div align="center">
+        {%if error%}
+        {{error}}
+        {%endif%}
+        <br>
+    </div>
+    <form action="{%url 'login'%}" method="post" class="box">
+        {%csrf_token%}
+    <div align="center">
+        <input name="username" type="text" value="" autocomplete="off" placeholder="아이디">
+        <br>
+        <input name="password" type="password" value="" placeholder="비밀번호">
+        <br>
+        <br>
+        <input class="btn btn-outline-primary" type="submit" value="로그인">
+        <a href="/"><button type="button" class="btn btn-outline-primary">Home</button></a>
+    </div>
+    </form>
+</div>
+
+<style>
+    .box input[type="text"],.box input[type="password"]{
+        width: 15rem;
+        text-align: center;
+        margin: 10px;
+        border: 0.125rem solid #e6e6e6;
+        border-radius: 0;
+        padding: 0.75rem;
+        outline:none;
+    }
+</style>
+{%endblock%}

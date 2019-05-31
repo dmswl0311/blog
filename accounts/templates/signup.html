@@ -1,0 +1,50 @@
+{%extends 'base.html'%}
+{%block content%}
+<div align="center">
+        <br>
+        <img src="https://cdn.icon-icons.com/icons2/677/PNG/512/feather-pen_icon-icons.com_60850.png" alt="블로그이미지" width="60px">
+        <h1 class="blog">회원가입</h1>
+        <!-- class="badge badge-success"  -->
+</div>
+<div class="container" style="background-color:rgba(255, 255, 255, 0.918); height:60vh; border-radius: 20px; padding:30px;">
+<form action="{%url 'signup'%}" method="post" class="box">
+    {%csrf_token%}
+    <br>
+    <div align="center" >
+    <!-- <label for="username"> 아이디 </label> -->
+    <input type="text" name="username" autocomplete="off" required placeholder="아이디" id="username">
+    <br>
+    <!-- <label for="password1"> 비밀번호 </label> -->
+    <input type="password" name="password1" required placeholder="비밀번호" id="password1">
+    <br>
+    <!-- <label for="password2"> 비밀번호 확인 </label> -->
+    <input type="password" name="password2" required placeholder="비밀번호 확인" id="password2">
+    <br>
+    <!-- <label for="email"> 이메일 </label> -->
+    <!-- <input type="email" name="email" autocomplete="off" placeholder="이메일" id="email"> -->
+    <!-- <br> -->
+    <!-- <label for="date"> 생년월일 </label> -->
+    <!-- <input type="date" name="date" autocomplete="off" placeholder="필수 아님" id="date"> -->
+    <input type="text" name="nickname" autocomplete="off" placeholder="닉네임" id="nickname">
+    <br>
+    <input type="text" name="region" autocomplete="off" placeholder="지역" id="region">
+    <br>
+    <br>
+    <input type="submit" value="회원가입" class="btn btn-outline-primary">
+    <a href="/"><button type="button" class="btn btn-outline-primary">Home</button></a>
+    </div>
+</form>
+</div>
+
+<style>
+    .box input[type="text"],.box input[type="password"],.box input[type="email"],.box input[type="date"]{
+        width: 12rem;
+        text-align: center;
+        margin: 5px;
+        border: 0.125rem solid #e6e6e6;
+        border-radius: 0;
+        padding: 0.30rem;
+        outline:none;
+    }
+</style>
+{%endblock%}

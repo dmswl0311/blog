@@ -1,0 +1,39 @@
+{%extends 'base.html' %}
+{%block content %}
+{% load staticfiles %}
+
+<div align="center">
+    <br>
+    <img src="https://cdn.icon-icons.com/icons2/677/PNG/512/feather-pen_icon-icons.com_60850.png" alt="블로그이미지" width="60px">
+    <h1 class="blog">글 읽기</h1>
+    <!-- class="badge badge-success"  -->
+</div>
+<div class="container" style="background-color:rgba(255, 255, 255, 0.918); height:90vh; border-radius: 20px; padding:20px;">
+    <br>
+    <p style="float:left;">카테고리: {{post.category}}</p>
+    <p style="float:right;">글번호: {{post.id}}</p>
+    <p style="float:right; margin-right:10px;">작성자: {{post.user.profile.nickname}}</p>
+    <br>
+    <hr style="clear:both;">
+    <p style="font-size: 40px; float:left; color: rgb(1, 88, 250);">{{post.title}}</p> <!-- 글제목 -->
+    <p style="font-size: 10px; float:right;">{{post.created_at}}</p> <!-- 글 작성 시간 -->
+    <hr style="clear:both;">
+
+    {%if post.pic%}
+        <img src="{{post.pic.url}}" style="width: 200px;">
+        <br>
+    {%endif%}
+    
+    <br>
+    <p style="clear:both;">{{post.content|linebreaksbr}}</p> <!-- 글 내용 -->
+    <br>
+    <hr style="clear:both;">
+<div align="right">
+    <a href="/"><button type="button" class="btn btn-outline-primary" style="font-size: 12px">Home</button></a>
+    {%if request.user == post.user or request.user.is_staff %}
+    <a href="{%url 'update' post.id%}"><button type="button" class="btn btn-outline-primary" style="font-size: 12px">수정</button></a>
+    <a href="{%url 'delete' post.id%}"><button type="button" class="btn btn-outline-primary" style="font-size: 12px">삭제</button></a>
+    {%endif%}
+</div>
+</div>
+{%endblock%}

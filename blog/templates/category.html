@@ -1,0 +1,27 @@
+{%extends 'base.html' %}
+{%block content %}
+
+<div align="center">
+        <br>
+        <img src="https://cdn.icon-icons.com/icons2/677/PNG/512/feather-pen_icon-icons.com_60850.png" alt="블로그이미지" width="60px">
+        <h1 class="blog">분류 결과</h1>
+        <!-- class="badge badge-success"  -->
+</div>
+
+<div class="container" style="background-color:rgba(255, 255, 255, 0.918); height:150vh; border-radius: 20px; padding:30px;">
+{%for p in posts%}
+<div align="left">
+        <p><div style="font-size:13px; float:left;">카테고리: {{p.category}}</div></p>
+        <p style="font-size:13px; float:right;">글번호: {{p.id}}</p>
+        </div>
+        <a href="{%url 'read' p.id%}"><p style="font-size: 20px; color: rgb(1, 88, 250); clear:both;">{{p.title}}</p></a>
+        <!-- 제목 -->
+        <p>{{p.content|truncatewords:10}}</p>
+        <!-- 내용 -->
+        <div style="font-size:10px" align="right">{{p.created_at}}</div>
+        <!-- 글 작성 시간 -->
+        <hr>
+{%endfor%}
+    <div align="right"><a href="/"><button type="button" class="btn btn-outline-primary" style="font-size: 12px">Home</button></a></div>
+</div>
+{%endblock%}

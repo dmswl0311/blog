@@ -1,0 +1,113 @@
+{%extends 'base.html' %}
+{%block content %}
+
+<nav class="navbar fixed-top navbar-light bg-light">
+    {%if user.is_authenticated %}
+    <div align="left">
+        <form action="{%url 'logout'%}" method="post">
+            {%csrf_token%}
+            {{user.profile.nickname}}님 환영합니다.
+            <input type="submit" value="로그아웃" style="font-size: 12px;" class="btn btn-outline-primary">
+        </form>
+    </div>
+    <a href="{%url 'create'%}" style="float: right;"><button type="button" class="btn btn-outline-primary"
+            style="font-size: 12px">글쓰기</button></a>
+    {%else%}
+    <nav style="margin-left:auto;">
+        <a href="{%url 'login'%}" class="btn btn-outline-primary" style="font-size: 12px">로그인</a>
+        <a href="{%url 'signup'%}" class="btn btn-outline-primary" style="font-size: 12px">회원가입</a>
+        {%endif%}
+    </nav>
+</nav>
+
+<div align="center" style="clear:both;">
+    <br>
+    <br>
+    <br>
+    <br>
+    <img src="https://cdn.icon-icons.com/icons2/677/PNG/512/feather-pen_icon-icons.com_60850.png" alt="블로그이미지"
+        width="60px">
+    <h1 class="blog">블로그</h1>
+    <!-- class="badge badge-success"  -->
+</div>
+
+<div class="container" style="background-color:rgba(255, 255, 255, 0.918); height:110vh; border-radius: 20px;">
+    <br>
+    <div align="right">
+        <form action="{%url 'search'%}">
+            <select name="search_filter">
+                <option value="제목">제목</option>
+                <option value="내용">내용</option>
+                <option value="제목과내용">제목+내용</option>
+            </select>
+            <!-- <input type="text" name="search" placeholder="?"> -->
+            <input type="text" name="search" placeholder="Search.." class="animated-search-form" autocomplete="off">
+            <input type="submit" value="검색" class="btn btn-outline-primary" style="font-size: 12px">
+    </div>
+    </form>
+    <div align="right">
+        <form action="{%url 'category'%}">
+            <select name="category">
+                <option value="공지">공지</option>
+                <option value="자유">자유</option>
+                <option value="질문">질문</option>
+            </select>
+            <input type="submit" value="분류" class="btn btn-outline-primary" style="font-size: 12px">
+        </form>
+    </div>
+    <div class="c">
+        {%for p in posts%}
+        <div align="left">
+            <p>
+                <div style="font-size:13px; float:left;">카테고리: {{p.category}}</div>
+            </p>
+            <p style="font-size:13px; float:right;"> 글번호: {{p.id}}</p>
+            <p style="font-size:13px; float:right; margin-right:10px; "> 작성자: {{p.user.profile.nickname}}</p>
+            <p style="clear:both;"><a href="{%url 'read' p.id%}"
+                    style="color: rgb(1, 88, 250); font-size: 23px;">{{p.title}}</a></p> <!-- 제목 -->
+            <p>{{p.content|truncatechars:10}}</p> <!-- 내용 -->
+        </div>
+        <div align="right">
+            <div style="font-size:10px">{{p.created_at}}</div> <!-- 글 작성 시간 -->
+        </div>
+        <!-- <p>글 수정 시간:{{p.updated_at}}</p> -->
+        <hr>
+        {%endfor%}
+    </div>
+
+    <nav>
+        <ul class="pagination">
+            {% if posts.has_previous %}
+            <li class="page-item "><a class="page-link" href="?page={{ posts.previous_page_number }}">&lt;</a></li>
+            {% endif %}
+            {% if posts.number > 2 %}
+            <li class="page-item"><a class="page-link" href="?page=1">&lt;&lt;</a></li>
+            {%endif%}
+            {% if posts.has_next %}
+            <li class="page-item ml-auto"><a class="page-link" href="?page={{ posts.next_page_number }}">&gt;</a></li>
+            {% endif %}
+        </ul>
+    </nav>
+</div>
+
+<style>
+    .c {
+        padding: 20px;
+    }
+
+    .animated-search-form[type=text] {
+        width: 10rem;
+        border: 0.125rem solid #e6e6e6;
+        border-radius: 0;
+        background-image: url("//image.ibb.co/i7NbrQ/search_icon_15.png");
+        background-position: 0.625rem 0.625rem;
+        background-repeat: no-repeat;
+        padding: 0.10rem 1.25rem 0.35rem 2rem;
+
+    }
+
+    .animated-search-form[type=text]:focus {
+        width: 30%;
+    }
+</style>
+{%endblock%}

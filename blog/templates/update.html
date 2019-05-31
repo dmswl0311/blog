@@ -1,0 +1,22 @@
+{%extends 'base.html' %}
+{%block content %}
+
+<div align="center">
+        <br>
+        <img src="https://cdn.icon-icons.com/icons2/677/PNG/512/feather-pen_icon-icons.com_60850.png" alt="블로그이미지" width="60px">
+        <h1 class="blog">글 수정</h1>
+        <!-- class="badge badge-success"  -->
+</div>
+<div class="container" style="background-color:rgba(255, 255, 255, 0.918); height:80vh; border-radius: 20px; padding:30px;">
+<form action="{%url 'update' post.id%}" method="post">
+    {%csrf_token%}
+    <p style="float: left; margin-right:10px;">글제목</p>
+    <input type="text" name="title" value="{{post.title}}" style="float: left;" autocomplete="off">
+    <p style="clear:both; float: left; margin-right:10px;">글내용</p>
+    <textarea name="content" cols="100" rows="10" style="float: left;">{{post.content}}</textarea>
+    <div align="right" style="clear:both;">
+    <input type="submit" value="수정하기" class="btn btn-outline-primary" style="font-size: 12px"> 
+    <a href="/"><button type="button" class="btn btn-outline-primary" style="font-size: 12px">Home</button></a></div>
+</form>
+</div>
+{%endblock%}
