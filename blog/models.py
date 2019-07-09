@@ -20,7 +20,7 @@ class Blog(models.Model):
 class Profile(models.Model):
     user=models.OneToOneField(User,on_delete=models.CASCADE)
     nickname=models.CharField(max_length=50,blank=True)
-    region=models.CharField(max_length=50,blank=True)
+    # region=models.CharField(max_length=50,blank=True)
     # 원하는거 아무거나 넣으면 됨
 
 @receiver(post_save, sender=User)
