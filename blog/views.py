@@ -4,7 +4,7 @@ from django.core.paginator import Paginator
 from django.db.models import Q
 
 def index(request):
-    posts=Blog.objects.all()
+    posts = Blog.objects.all().order_by('-updated_at')
     paginator=Paginator(posts,3)
     now_page=request.GET.get('page')
     posts=paginator.get_page(now_page)
