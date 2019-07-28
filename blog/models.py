@@ -17,6 +17,15 @@ class Blog(models.Model):
     def __str__(self):
         return self.title
 
+class Comment(models.Model):
+    blog=models.ForeignKey(Blog,on_delete=models.CASCADE)
+    user=models.ForeignKey(User,on_delete=models.CASCADE)
+    content=models.TextField(blank=True)
+    anonymous=models.BooleanField(default=False)
+
+    created_at=models.DateField(auto_now_add=True)
+    updated_at=models.DateField(auto_now=True)
+
 class Profile(models.Model):
     user=models.OneToOneField(User,on_delete=models.CASCADE)
     nickname=models.CharField(max_length=50,blank=True)

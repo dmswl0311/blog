@@ -1,12 +1,36 @@
 {%extends 'base.html' %}
 {%block content %}
 
-<div align="center">
-        <br>
-        <img src="https://cdn.icon-icons.com/icons2/677/PNG/512/feather-pen_icon-icons.com_60850.png" alt="블로그이미지" width="60px">
-        <h1 class="blog">글 수정</h1>
-        <!-- class="badge badge-success"  -->
+<nav class="navbar fixed-top navbar-light bg-light">
+    {%if user.is_authenticated %}
+    <div align="left">
+        <form action="{%url 'logout'%}" method="post">
+            {%csrf_token%}
+            {{user.profile.nickname}}님 환영합니다.
+            <input type="submit" value="로그아웃" style="font-size: 12px;" class="btn btn-outline-primary">
+        </form>
+    </div>
+    <a href="{%url 'create'%}" style="float: right;"><button type="button" class="btn btn-outline-primary"
+            style="font-size: 12px">글쓰기</button></a>
+    {%else%}
+    <nav style="margin-left:auto;">
+        <a href="{%url 'login'%}" class="btn btn-outline-primary" style="font-size: 12px">로그인</a>
+        <a href="{%url 'signup'%}" class="btn btn-outline-primary" style="font-size: 12px">회원가입</a>
+        {%endif%}
+    </nav>
+</nav>
+
+<div align="center" style="clear:both;">
+    <br>
+    <br>
+    <br>
+    <br>
+    <img src="https://cdn.icon-icons.com/icons2/677/PNG/512/feather-pen_icon-icons.com_60850.png" alt="블로그이미지"
+        width="60px">
+    <h1 class="blog">    </h1>
+    <!-- class="badge badge-success"  -->
 </div>
+
 <div class="container" style="background-color:rgba(255, 255, 255, 0.918); height:80vh; border-radius: 20px; padding:30px;">
 <form action="{%url 'update' post.id%}" method="post">
     {%csrf_token%}

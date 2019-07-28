@@ -1,10 +1,10 @@
 from django.shortcuts import render,redirect
-from .models import Blog
+from .models import Blog,Comment
 from django.core.paginator import Paginator
 from django.db.models import Q
 
 def index(request):
-    posts = Blog.objects.all().order_by('-updated_at')
+    posts = Blog.objects.all().order_by('-created_at')
     paginator=Paginator(posts,3)
     now_page=request.GET.get('page')
     posts=paginator.get_page(now_page)
@@ -16,7 +16,7 @@ def index(request):
 def read(request,post_id):
     post=Blog.objects.get(id=post_id)
     context={
-        "post":post
+        "post":post,
     }
     return render(request,'read.html',context)
 
@@ -40,6 +40,8 @@ def create(request):
         post.save()
 
         return redirect(index)
+
+
 
 def update(request,post_id):
     if request.method=="GET":
