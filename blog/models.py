@@ -13,7 +13,8 @@ class Blog(models.Model):
     category=models.CharField(max_length=50,blank=True)
 
     pic = models.ImageField(upload_to='images/',null=True,blank=True)
-
+    like = models.ManyToManyField(User, related_name='likes',blank=True)
+ 
     def __str__(self):
         return self.title
 

@@ -53,13 +53,28 @@
     <br>
     <hr style="clear:both;">
 
+    <div align="center">   
+        <button id="{{post.id}}" class="btn btn-outline-danger" onclick="post_like(this.id)">
+            <!-- if 문 밖의 코드는 동일합니다.-->
+            <!-- 로그인 한 유저의 상태에 따라 초기 아이콘의 모양이 다릅니다. -->
+            {%if request.user in post.like.all%}
+                <!-- 로그인 한 유저가 좋아요를 누른 유저일때  -->
+                <i id="heart" class="fas fa-heart"></i>
+            {%else%}
+                <!-- 로그인 한 유저가 좋아요를 누른 유저가 아닐 때  -->
+                <i id="heart" class="far fa-heart"></i>
+            {%endif%}
+            <span id="like_count">{{post.like.count}}</span>
+        </button>
+    </div>
+
     {% if user.is_authenticated %}
     <form action="{%url 'c_create' post.id%}" method="POST">
         {%csrf_token%}
         <div class="input-group mt-5 mb-5">
             <input type="text" name="comment" class="form-control" placeholder="댓글을 입력하세요" autocomplete="off">
             <div class="input-group-append">
-                <button class="btn btn-outline-info"><i class="fas fa-pencil-alt"></i>등록</button>
+                <button class="btn btn-outline-info">등록 <i class="fas fa-pencil-alt"></i></button>
             </div>
         </div>
     </form>
@@ -90,5 +105,39 @@
 </div>
 
 </div>
+<!-- toast message -->
+<div aria-live="polite" aria-atomic="true" class="d-flex justify-content-center align-items-center" style="min-height:200px;">
+    <div class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+				<!-- 전송받은 message가 출려된다.id가 message -->
+        <div id="message" class="toast-body">
+        </div>
+    </div>
+</div>
+
+<script>
+    function post_like(id) {
+        $.ajax({
+            url: "{%url 'like'%}",
+            data: { 'post_id': id },
+            dataType: "json",
+            success: function (response) {
+                console.log(response)
+                $('#like_count').html(response.like_count)
+                $('#message').html(response.message)
+                $('.toast').toast('show')
+                if(response.message == "좋아요")
+                //좋아요 눌렀을 때 
+                {
+                    $('#heart').attr("class","fas fa-heart")
+                }
+                else if(response.message == "좋아요 취소")
+                //좋아요 상태에서 다시 눌렀을 때 
+                {
+                    $('#heart').attr("class","far fa-heart")
+                }
+            }
+        })
+    } 
+</script>
 
 {%endblock%}
