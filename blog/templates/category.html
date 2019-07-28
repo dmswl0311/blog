@@ -6,7 +6,7 @@
         <div align="left">
             <form action="{%url 'logout'%}" method="post">
                 {%csrf_token%}
-                {{user.profile.nickname}}님 환영합니다.
+                {{user.profile.nickname}}님 환영합니다. 
                 <input type="submit" value="로그아웃" style="font-size: 12px;" class="btn btn-outline-primary">
             </form>
         </div>
