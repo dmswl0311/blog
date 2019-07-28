@@ -32,7 +32,7 @@
     <!-- class="badge badge-success"  -->
 </div>
 
-<div class="container" style="background-color:rgba(255, 255, 255, 0.918); height:90vh; border-radius: 20px; padding:20px;">
+<div class="container" style="background-color:rgba(255, 255, 255, 0.918); height:60rem; border-radius: 20px; padding:20px;">
     <br>
     <p style="float:left;">카테고리: {{post.category}}</p>
     <p style="float:right;">글번호: {{post.id}}</p>
@@ -52,7 +52,35 @@
     <p style="clear:both;">{{post.content|linebreaksbr}}</p> <!-- 글 내용 -->
     <br>
     <hr style="clear:both;">
-  
+
+    {% if user.is_authenticated %}
+    <form action="{%url 'c_create' post.id%}" method="POST">
+        {%csrf_token%}
+        <div class="input-group mt-5 mb-5">
+            <input type="text" name="comment" class="form-control" placeholder="댓글을 입력하세요" autocomplete="off">
+            <div class="input-group-append">
+                <button class="btn btn-outline-info"><i class="fas fa-pencil-alt"></i></button>
+            </div>
+        </div>
+    </form>
+    {% endif %}
+
+    <div>
+        <ul class="list-group mb-2">
+            {%for c in comment%}
+            <li class="list-group-item list-group-item-light">
+                {%if c.anonymous == True%}
+                {%else%}
+                <span style="font-weight: bold;font-size:0.7em;">{{c.user}}</span>
+                {%endif%}
+                <br>
+                {{c.content}}
+                <a href="{%url 'c_delete' c.id%}"> 삭제</a>
+            </li>
+            {%endfor%}
+        </ul>
+    </div>
+    
 <div align="right">
     <a href="/"><button type="button" class="btn btn-outline-primary" style="font-size: 12px">Home</button></a>
     {%if request.user == post.user or request.user.is_staff %}

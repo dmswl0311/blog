@@ -15,8 +15,10 @@ def index(request):
 
 def read(request,post_id):
     post=Blog.objects.get(id=post_id)
+    comment = Comment.objects.filter(blog=post.id)
     context={
         "post":post,
+        "comment":comment,
     }
     return render(request,'read.html',context)
 
@@ -41,7 +43,23 @@ def create(request):
 
         return redirect(index)
 
+def c_create(request,post_id):
+    if request.method == "POST":
+        comment = Comment() 
+        comment.user = request.user 
+        comment.blog = Blog.objects.get(id=post_id) 
+        comment.content = request.POST['comment'] 
+        anonymous = request.POST.get('anonymous',False)  
+        if anonymous == "y":
+            comment.anonymous = True
+        comment.save() 
+        return redirect(read,comment.blog.id)
 
+def c_delete(request,comment_id):
+    comment = Comment.objects.get(id=comment_id)
+    pid=comment.blog.id
+    comment.delete()
+    return redirect(read,pid)
 
 def update(request,post_id):
     if request.method=="GET":
